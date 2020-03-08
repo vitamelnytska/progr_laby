@@ -1,0 +1,5 @@
+D:\proga2sem\MyLibrary\bin\Debug\MyLibrary.dll
+D:\proga2sem\MyLibrary\bin\Debug\MyLibrary.pdb
+D:\proga2sem\MyLibrary\obj\Debug\MyLibrary.dll
+D:\proga2sem\MyLibrary\obj\Debug\MyLibrary.pdb
+D:\proga2sem\MyLibrary\obj\Debug\MyLibrary.csprojAssemblyReference.cache
