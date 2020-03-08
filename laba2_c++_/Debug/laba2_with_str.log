@@ -1,0 +1,10 @@
+﻿  MyText.cpp
+D:\proga2sem\laba2_with_str\MyText.cpp(10,21): warning C4018: <: несоответствие типов со знаком и без знака
+D:\proga2sem\laba2_with_str\MyText.cpp(33,21): warning C4018: <: несоответствие типов со знаком и без знака
+D:\proga2sem\laba2_with_str\MyText.cpp(46,21): warning C4018: <: несоответствие типов со знаком и без знака
+D:\proga2sem\laba2_with_str\MyText.cpp(51,21): warning C4018: <: несоответствие типов со знаком и без знака
+  Source.cpp
+  Создание кода...
+D:\proga2sem\laba2_with_str\MyText.cpp(43,10): warning C4101: val: неиспользованная локальная переменная
+  LINK : эх эрщфхэ шыш эх т√яюыэхэр ёсюЁър D:\proga2sem\laba2_with_str\Debug\laba2_with_str.exe яЁш яюёыхфэхщ шэъЁхьхэЄэющ ъюьяюэютъх; т√яюыэ хЄё  яюыэр  ъюьяюэютър
+  laba2_with_str.vcxproj -> D:\proga2sem\laba2_with_str\Debug\laba2_with_str.exe
