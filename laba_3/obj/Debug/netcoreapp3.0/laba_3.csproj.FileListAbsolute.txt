@@ -1,0 +1,11 @@
+D:\proga2sem\laba_3\obj\Debug\netcoreapp3.0\laba_3.csprojAssemblyReference.cache
+D:\proga2sem\laba_3\obj\Debug\netcoreapp3.0\laba_3.AssemblyInfoInputs.cache
+D:\proga2sem\laba_3\obj\Debug\netcoreapp3.0\laba_3.AssemblyInfo.cs
+D:\proga2sem\laba_3\bin\Debug\netcoreapp3.0\laba_3.exe
+D:\proga2sem\laba_3\bin\Debug\netcoreapp3.0\laba_3.deps.json
+D:\proga2sem\laba_3\bin\Debug\netcoreapp3.0\laba_3.runtimeconfig.json
+D:\proga2sem\laba_3\bin\Debug\netcoreapp3.0\laba_3.runtimeconfig.dev.json
+D:\proga2sem\laba_3\bin\Debug\netcoreapp3.0\laba_3.dll
+D:\proga2sem\laba_3\bin\Debug\netcoreapp3.0\laba_3.pdb
+D:\proga2sem\laba_3\obj\Debug\netcoreapp3.0\laba_3.dll
+D:\proga2sem\laba_3\obj\Debug\netcoreapp3.0\laba_3.pdb
