@@ -1,97 +1,156 @@
-﻿// Melnytska Vitaliya IS-92
+﻿//Melnytska Vitaliya IS-92, Варіант-11
 
 using System;
 
-namespace lab_4_cs
+
+namespace lab_5_cs
 {
-    class Vector
+    class Rows//базовий клас
     {
+        public string a_ ; //значення рядка
+
+        public Rows(string a)  //конструктор з параметром
+        {
+            this.a_ = a;
+        }
+        public int count_l() //метод обчислення довжини рядка
+        {
+            return a_.Length;
+        }
+        public void print()
+        {
+            
+                Console.WriteLine(a_);
+            
+        }
+    }
+    class Abc : Rows {
+        //конструктор з праметром
+        public Abc(string a) : base(a){ }
+        //метод зсуву рядка на 1 символ право
+	    public void shift(int n)
+        {
+            string a="", b="", ab;
+            for (int j = 0; j < n; j++)
+            {
+                a += a_[a_.Length - j - 1];
+            }
+            for (int i = 0; i < a_.Length - n; i++)
+            {
+                b += a_[i];
+            }
+            ab = a + b;
+            this.a_ = ab;
+
+        }
       
-     public int length_; //довжина
-     public int angle_; //кут
-        public Vector()//конструктор за замовчуванням
+        //метод отримання даних
+        public int Get_length() 
         {
-            this.angle_ = 0;
-            this.length_ = 0;
-        }
-        public Vector(int length, int angle)  //коструктор з параметрами
-        {
-            this.length_ = length;
-            this.angle_ = angle;
-        }
-        public Vector(Vector copy)  //конструктор копіювання
-        {
-            this.length_ = copy.length_;
-            this.angle_ = copy.angle_;
+            return count_l();
         }
 
 
-
-        //методи отримання даних вектора
-        public int Get_length(){ 
-            return length_;
-        }
-        public int Get_angle()
-        {
-            return angle_;
-         }
-        //метод повороту вектору на будь-який кут
-        public Vector turn(int angle)
-        {
-            Vector res = new Vector();
-            res.angle_ = Get_angle() + angle;
-            res.length_ = Get_length();
-            return res;
-        }
-        //перевантаження оператора додавання
-    public static Vector operator +(Vector r,Vector l)
-    {
-            Vector res = new Vector();
-            res.length_ = r.length_ + l.length_;
-            res.angle_ = r.angle_ + l.angle_;
-            return res;
     }
-        //перевантаження оператора ділення
-        public static Vector operator /(Vector div, int d)
+    //базовий клас "Shapes"
+    class Shapes
     {
-            Vector res = new Vector();
-            res.length_ = div.length_ / d;
-            res.angle_= div.angle_;
-            return res;
+        virtual public double Sqw() //базовий клас "Shapes"
+        {
+            return 0;
+        }
+        virtual public double Perymetr() //віртуальна ф-ція обч. периметру
+        {
+            return 0;
+        }
+        
+
     }
-    
-    
-};
-    class Program
+    //похідний клас "Square"
+    class Square : Shapes
+    {   //координати вершин
+        public int xA, xB, yA, yB;
+        private double AB; //значення довжини сторони
+        public Square(int ax, int ay, int bx, int by) //конструктор з параметрами
+        {
+            xA = ax; 
+            xB = bx; 
+            yA = ay; 
+            yB = by;
+
+        }
+        // ф-ція обч. довжини сторони квадрату
+        public double pl()
+        {
+            AB = Math.Sqrt(Convert.ToInt32(Math.Pow((xB - xA ), 2)) + Convert.ToInt32(Math.Pow((yB - yA), 2)));
+            return (AB);
+        }
+        //віртуальна ф-ція обч. площі
+        public override double Sqw()
+        {
+            
+            return (Convert.ToInt32(Math.Pow(pl(),2)));
+        }
+        //віртуальна ф-ція обч. периметру
+        public override double Perymetr()
+        {
+            return (4 * pl());
+        }
+        
+    }
+    //похідний клас "Circle"
+    class Circle : Shapes
+    {   //радіус кола
+        public int _r;
+        //конструктор з параметром
+        public Circle(int r)
+        {
+            _r = r;
+
+        }
+
+        //віртуальна ф-ція обч. площі
+        override public double Sqw()
+        {
+            return((Math.PI*_r*_r));
+        }
+        //віртуальна ф-ція обч. периметру
+        override public double Perymetr()
+        {
+            return ((Math.PI * _r * 2));
+        }
+    }
+class Program
     {
         static void Main(string[] args)
         {
-            Vector B1 = new Vector(); // створення об'єкта за допомогою конструктора за замовчуванням
-            Vector B2 = new Vector(6, 90); //створення об'єкта за допомогою конструктора з параметрами
-            Vector B3 = new Vector(B2); //створення об'єкта за допомогою конструктора копіювання
-            Console.WriteLine("Vectors:");
-            Console.WriteLine("1. (" + B1.Get_length() + "," + B1.Get_angle() + ")");
-            Console.WriteLine("2. (" + B2.Get_length() + "," + B2.Get_angle() + ")");
-            Console.WriteLine("3. (" + B3.Get_length() + "," + B3.Get_angle() + ")");
 
-            Vector b2 = new Vector(B2 / 2); //зменшення об'єкта вдвічі
-            Console.WriteLine("Vectors after the division into 2 vector 2:");
-            Console.WriteLine("1. (" + B1.Get_length() + "," + B1.Get_angle() + ")");
-            Console.WriteLine("2. (" + b2.Get_length() + "," + b2.Get_angle() + ")");
-            Console.WriteLine("3. (" + B3.Get_length() + "," + B3.Get_angle() + ")");
-
-            Vector b3 = new Vector(B3.turn(45)); //поворот об'єкта на 45 градусів
-            Console.WriteLine("Vectors after the turning 45 degrees vector 3 :");
-            Console.WriteLine("1. (" + B1.Get_length() + "," + B1.Get_angle() + ")");
-            Console.WriteLine("2. (" + b2.Get_length() + "," + b2.Get_angle() + ")");
-            Console.WriteLine("3. (" + b3.Get_length() + "," + b3.Get_angle() + ")");
+            Console.WriteLine("******************************\nTask 1\n");
+            Abc str = new Abc("abcdefgh");
+            Console.WriteLine("String: ");
+            str.print() ;
+            Console.WriteLine("String after the moving elements: ");
+            str.shift(1);
+            str.print();
+            Console.WriteLine("Length of string: "+ str.Get_length());
+            Console.WriteLine("\n******************************\t\n\nTask 2");
             
-            B1 = b2 + b3; //складання двох об'єктів в один
-            Console.WriteLine("Vectors after the  addition vector 2 and 3 and placing them into vector 1:");
-            Console.WriteLine("1. (" + B1.Get_length() + "," + B1.Get_angle() + ")");
-            Console.WriteLine("2. (" + b2.Get_length() + "," + b2.Get_angle() + ")");
-            Console.WriteLine("3. (" + b3.Get_length() + "," + b3.Get_angle() + ")");
-            Console.ReadKey();
+            Shapes [] fig = new Shapes[2];
+            Square kvadrat = new Square(2,0,2,2);
+            fig[0] = kvadrat;
+            fig[0].Sqw();
+            fig[0].Perymetr();
+            Circle kolo = new Circle(2);
+            fig[1] = kolo;
+            fig[1].Sqw();
+            fig[1].Perymetr();
+            foreach(Shapes element in fig)
+            {
+                Console.WriteLine("----------");
+                Console.WriteLine("Square is {0}", element.Sqw());
+                Console.WriteLine("Perymetr is {0}", element.Perymetr());
+
+            }
         }
     }
 }
