@@ -1,156 +1,61 @@
-﻿//Melnytska Vitaliya IS-92, Варіант-11
+﻿using System;
 
-using System;
-
-
-namespace lab_5_cs
+namespace lab6_exeption_cs
 {
-    class Rows//базовий клас
-    {
-        public string a_ ; //значення рядка
-
-        public Rows(string a)  //конструктор з параметром
-        {
-            this.a_ = a;
-        }
-        public int count_l() //метод обчислення довжини рядка
-        {
-            return a_.Length;
-        }
-        public void print()
-        {
-            
-                Console.WriteLine(a_);
-            
-        }
-    }
-    class Abc : Rows {
-        //конструктор з праметром
-        public Abc(string a) : base(a){ }
-        //метод зсуву рядка на 1 символ право
-	    public void shift(int n)
-        {
-            string a="", b="", ab;
-            for (int j = 0; j < n; j++)
+    class Expression
+    {   
+        private double a_, b_, c_;  //вхідні дані   
+        public Expression() {a_ = 0; b_ = 0; c_ = 0; } //конструктор за замовчуванням
+        public Expression(double a, double b, double c) { a_ = a; b_ = b; c_ = c; } //конструктор з параметрами
+        public void Answer() { //перевірка на умови виразу
+            try
             {
-                a += a_[a_.Length - j - 1];
+                if ((41 - b_ / c_ + 1) == 0)
+                    throw new DivideByZeroException("(41 - b_ / c_ + 1)=0");
+                else if (c_ == 0)
+                    throw new DivideByZeroException("c=0");
+                else if ((a_ * b_ + 2) <= 0)
+                    throw new ArithmeticException("(a_ * b_ + 2) <= 0");
+                else print();
             }
-            for (int i = 0; i < a_.Length - n; i++)
+            catch (DivideByZeroException)//ловимо помилку ділення на 0
             {
-                b += a_[i];
+                Console.WriteLine("\t\t\tПомилка: Дiлити на 0 не можна");
             }
-            ab = a + b;
-            this.a_ = ab;
-
+            catch (ArithmeticException)//ловимо помилку на умову підлогарифмічного виразу
+            {
+                Console.WriteLine("\t\t\tПомилка: Пiдлогарифмiчний вираз повинен бути бiльше 0");
+            }
         }
-      
-        //метод отримання даних
-        public int Get_length() 
+        public double calculate() //вирахування виразу
         {
-            return count_l();
+            return (Math.Log10(a_ * b_ + 2) * c_ / (41 - b_ / c_ + 1));
         }
-
-
-    }
-    //базовий клас "Shapes"
-    class Shapes
-    {
-        virtual public double Sqw() //базовий клас "Shapes"
+        public void print() { //виведення результату
+            Console.WriteLine(calculate());
+        }
+        public void print_abc() //виведення вхідних даних
         {
-            return 0;
+            Console.WriteLine(  "a=" + a_ + " b=" + b_ + " c=" + c_  );
         }
-        virtual public double Perymetr() //віртуальна ф-ція обч. периметру
-        {
-            return 0;
-        }
-        
 
     }
-    //похідний клас "Square"
-    class Square : Shapes
-    {   //координати вершин
-        public int xA, xB, yA, yB;
-        private double AB; //значення довжини сторони
-        public Square(int ax, int ay, int bx, int by) //конструктор з параметрами
-        {
-            xA = ax; 
-            xB = bx; 
-            yA = ay; 
-            yB = by;
-
-        }
-        // ф-ція обч. довжини сторони квадрату
-        public double pl()
-        {
-            AB = Math.Sqrt(Convert.ToInt32(Math.Pow((xB - xA ), 2)) + Convert.ToInt32(Math.Pow((yB - yA), 2)));
-            return (AB);
-        }
-        //віртуальна ф-ція обч. площі
-        public override double Sqw()
-        {
-            
-            return (Convert.ToInt32(Math.Pow(pl(),2)));
-        }
-        //віртуальна ф-ція обч. периметру
-        public override double Perymetr()
-        {
-            return (4 * pl());
-        }
-        
-    }
-    //похідний клас "Circle"
-    class Circle : Shapes
-    {   //радіус кола
-        public int _r;
-        //конструктор з параметром
-        public Circle(int r)
-        {
-            _r = r;
-
-        }
-
-        //віртуальна ф-ція обч. площі
-        override public double Sqw()
-        {
-            return((Math.PI*_r*_r));
-        }
-        //віртуальна ф-ція обч. периметру
-        override public double Perymetr()
-        {
-            return ((Math.PI * _r * 2));
-        }
-    }
-class Program
+    class Program
     {
         static void Main(string[] args)
         {
-
-            Console.WriteLine("******************************\nTask 1\n");
-            Abc str = new Abc("abcdefgh");
-            Console.WriteLine("String: ");
-            str.print() ;
-            Console.WriteLine("String after the moving elements: ");
-            str.shift(1);
-            str.print();
-            Console.WriteLine("Length of string: "+ str.Get_length());
-            Console.WriteLine("\n******************************\t\n\nTask 2");
-            
-            Shapes [] fig = new Shapes[2];
-            Square kvadrat = new Square(2,0,2,2);
-            fig[0] = kvadrat;
-            fig[0].Sqw();
-            fig[0].Perymetr();
-            Circle kolo = new Circle(2);
-            fig[1] = kolo;
-            fig[1].Sqw();
-            fig[1].Perymetr();
-            foreach(Shapes element in fig)
+            Expression[] arr = new Expression[4]; //масив об'єктів вхідних даних
+            arr[0] = new Expression(1, 2, 3);
+            arr[1] = new Expression(1, 2, 0);
+            arr[2] = new Expression(1, 42, 1);
+            arr[3] = new Expression(1, -2, 1);
+            foreach (Expression el in arr)
             {
-                Console.WriteLine("----------");
-                Console.WriteLine("Square is {0}", element.Sqw());
-                Console.WriteLine("Perymetr is {0}", element.Perymetr());
-
+                el.print_abc();
+                Console.WriteLine("\tExpression log10(a * b + 2) * c / (41 - b / c + 1) = ");
+                el.Answer();
             }
+
         }
     }
 }
