@@ -1,90 +1,120 @@
-// Melnytska Vitaliya IS-92
-
+//Мельницька Віталія ІС-92
 #include <iostream>
 using namespace std;
+//що в собі містить вузол:
+struct Node
+{
 
-class Vector {
-private:
-	int length_; //довжина
-	int angle_; //кут
-public:
-	 Vector()//конструктор за замовчуванням
-	 {
-		 length_ = 0;
-		 angle_ = 0;
-	} 
-	 Vector(int length, int angle)  //коструктор з параметрами
-		 {
-			 length_ = length;
-			 angle_ = angle;
-	 }
-	 Vector(const Vector& co) //конструктор копіювання
-	 {
-		 length_ = co.length_;
-		 angle_ = co.angle_;
-	 }
-	 void copy(const Vector& co) {
-		 this->length_ = co.length_;
-		 this->angle_ = co.angle_;
-	 }
-	 
-	 Vector turn( int angle ) { //метод повороту вектору на будь-який кут
-		 Vector res;
-		 int first;
-		 first = Get_angle(); //дані В3
-		  res.angle_ = angle + first; //результат повороту
-		  res.length_ = Get_length();
-		 return res;
-
-	 }
-	 int Get_length() { //методи отримання даних вектора
-		 return length_;
-	 }
-	 int Get_angle() {
-		 return angle_;
-	 }
-	 
-	 Vector operator +(Vector obj) { // перевантаження оператора додавання
-		 Vector res;
-		 res.length_ = Get_length() + obj.length_;
-		 res.angle_ = Get_angle() + obj.angle_;
-		 return res;
-	 }
-	 Vector operator /(int a) { // перевантаження оператора ділення
-		 Vector res;
-		 res.length_ = Get_length() / a;
-		 res.angle_ = Get_angle();
-		 return res;
-	 }
-	 //перевантаження оператора виводу
-	 friend ostream& operator <<(ostream& out, const Vector& d) {
-		 out <<"("<< d.length_ <<" , "<< d.angle_<<")";
-		 return out;
-	 }
+	float num; //наше значення
+	
+	Node *next; //ссилка на наступний вузол
 };
+typedef Node* pNode; //вказівник на структуру
+pNode Head = NULL; //ссилка на наступний елемент
+pNode THead = NULL; //ссилка на наступний елемент іншого списку
+//створення вузла
+pNode CreateNode(float newNumber) {
+	pNode newNode = new Node;
+	newNode->num = newNumber;
+	
+	newNode->next = NULL;
+	return newNode; //повертає адресу створеного вузла
+}
+//включення до початку
+void AddFirst(pNode & Head, pNode newNode) {
+	newNode->next = Head;
+	Head = newNode;
+}
+//пошук середнього значення в списку
+float Average(pNode& Head) {
+	pNode q = Head;
+	float average = 0;
+	float sum = 0;
+	int count = 0;
+	//поки вузол не дорівнює нулю
+	while (q) {
+		sum += q->num;
+		count++;
+		q = q->next;
+	}
+	average = sum / count;
+	return average; //повертаємо шукане середнє значення
+}
+// рахує кількість елем. більших за середнє значення
+int Count(pNode& Head, float a) {
+	pNode q = Head;
+	int count = 0;
+	while (q) {
+		if (q->num > a) {
+			count++;
+		}
+		q = q->next;
+	}
+	return count;
+}
+// ф-ція видалення вузлів
+void DeleteNode(pNode& Head, pNode p) {
+	pNode q = Head;
+	if (Head == p)
+		Head = p->next;
+	else {
+		while (q && q->next != p) {
+			q = q->next;
+			if (q == NULL) return;
+			q->next = p->next;
+		}
+		delete p;
+	}
+}
+// видалення вузлів з від'ємними значеннями
+void DeleteNegative(pNode& Head) {
+	pNode q = Head;
+	while (q) {
+		if (q->num < 0)
+			DeleteNode(Head, q);
+		q = q->next;
+	}
+} 
+//виведення списку
+void print(pNode &Head) {
+	cout << "List:" << endl;
+	pNode q = Head;
+	while (q) {
+		cout << q->num<<" ";
+		q = q->next;
+	}
+	cout << endl;
+}
+int main()
+{
+	
+	float a[] = { 3.25,4.25,6.25,7.25, -9.5,-1.5 };
+	float b[] = { 1.2,1.2,-2.2,-2.2, -2.5,-2.5 };
+	for (int i = 0; i <= 5; i++) {
+		pNode f = CreateNode(a[i]); //створюємо список один
+		AddFirst(Head, f);
 
-int main() {
-	Vector B1; //  у конструктор за замовчуванням 
-	Vector B2(6,90); //параметри передаються у конструктор з параметрами
-	Vector B3(B2);  // у конструктор копіювання
-	cout << "Vectors:" << endl;
-	cout <<"1. "<< B1 << endl;
-	cout << "2. " << B2 << endl;
-	cout << "3. " << B3 << endl;
-	B2.copy(B2.operator/ (2));
-	cout << "Vectors after the division into 2 vector 2:" << endl;
-	cout << "1. " << B1 << endl;
-	cout << "2. " << B2 << endl;
-	cout << "3. " << B3 << endl;
-	B3.copy( B3.turn( 45)) ;
-	cout << "Vectors after the turning 45 degrees vector 3 :" << endl;
-	cout << "1. " << B1 << endl;
-	cout << "2. " << B2 << endl;
-	cout << "3. " << B3<< endl;
-	B1 = B2 + B3;
-	cout << "Vectors after the  addition vector 2 and 3 and placing them into vector 1:" << endl;
-	cout << "1. " << B1 << endl;
-	cout << "2. " << B2 << endl;
-	cout << "3. " << B3 << endl;
+	}
+	float aver = Average(Head); 
+	print(Head);
+	cout <<endl<< "average: "<<aver << endl;
+	cout <<"Amount: "<< Count(Head,aver) << endl;
+	DeleteNegative(Head); //видаляємо вузли
+	print(Head);
+	for (int i = 0; i <= 5; i++) { //створємо список другий
+		pNode g = CreateNode(b[i]); 
+		AddFirst(THead, g); 
+
+	}
+	//шукаємо сер. значення в другому списку
+	float Taver = Average(THead);
+	print(THead);
+	cout << endl << "average: " << Average(THead) << endl;
+	cout << "Amount: " << Count(THead, Taver) << endl;
+	DeleteNegative(THead);
+	print(THead);
 	return 0;
+
+	
+
 }
